@@ -15,7 +15,7 @@ public:
     }
 
     // 添加老师账号
-    void addManager(string &usernamev, string &passwordv, int &userTypev, int &statusv);
+    void addManager(string &usernamev, string &passwordv, int &userTypev, int &statusv, string &classmanagev);
 
     // 登录
     Manager *login();

@@ -6,8 +6,6 @@
 
 using namespace std;
 
-void processTeacherMenu(Stulist &stulist);
-
 int main() {
     Stulist stulist;
     Manlist manlist;
@@ -19,85 +17,65 @@ int main() {
     string name, gender, id, className;
     int scores[4];
     while (inStudent >> name >> gender >> id >> className) {
-        for (int &score: scores) inStudent >> score;
+        for (int i = 0; i < 4; ++i) inStudent >> scores[i];
         stulist.addStudent(name, gender, id, className, scores);
     }
     inStudent.close();
 
     // 读取管理员信息
-    string username, password;
+    string username, password, classmanage;
     int userType, status;
-    while (inManager >> username >> password >> userType >> status) {
-        manlist.addManager(username, password, userType, status);
+    while (inManager >> username >> password >> userType >> status >> classmanage) {
+        manlist.addManager(username, password, userType, status, classmanage);
     }
     inManager.close();
 
     int choice_1, choice_2;
 
-    while (true) {
-        Menu::welcome();
-
-        cin >>
-            choice_1;
+    process1:
+    Menu::welcome();
+    while (cin >> choice_1) {
         switch (choice_1) {
             case 1: {
                 Manager *target = manlist.login();
-                if (target != nullptr) {
-                    processTeacherMenu(stulist);
+                if (target == nullptr) goto process1;
+                process2:
+                Menu::teacherMenu();
+                cin >> choice_2;
+                switch (choice_2) {
+                    case 1: {//添加学生信息
+                        stulist.addStudentByTeacher(target->getclassmanage());
+                        goto process2;
+                        break;
+                    }
+                    case 7: {
+                        goto process1;
+                        break;
+                    }
+                    default: {
+                        cout << "请输入有效值!" << endl;
+                        goto process2;
+                        break;
+                    }
                 }
+                break;
             }
+            case 2: {
                 break;
-            case 2:
-// 管理员登录
-// 根据管理员用户名和密码登录，并显示管理员功能菜单
-                break;
-            case 3:
-
+            }
+            case 3: {
                 Menu::bye();
-
+                stulist.write();
+                manlist.write();
                 return 0;
-            default:
-                cout << "请输入有效值!" <<
-                     endl;
+                break;
+            }
+            default: {
+                cout << "请输入有效值!" << endl;
+                goto process1;
+                break;
+            }
         }
     }
     return 0;
-}
-
-void processTeacherMenu(Stulist &stulist) {
-    int choice;
-    while (true) {
-        Menu::teacherMenu();
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                // 添加学生信息
-                // 从键盘读取学生信息并添加到学生列表中
-                break;
-            case 2:
-                // 查询学生信息
-                // 根据学号、姓名或班级等条件查询学生信息并显示
-                break;
-            case 3:
-                // 排序学生成绩
-                // 根据学号、姓名、成绩等条件对学生信息进行排序并显示
-                break;
-            case 4:
-                // 统计学生成绩
-                // 统计学生总分、平均分等信息并显示
-                break;
-            case 5:
-                // 修改学生信息
-                // 根据学号或姓名等条件修改学生信息
-                break;
-            case 6:
-                // 删除学生信息
-                // 根据学号或姓名等条件删除学生信息
-                break;
-            case 7:
-                return; // 返回上级菜单
-            default:
-                cout << "请输入有效值!" << endl;
-        }
-    }
 }

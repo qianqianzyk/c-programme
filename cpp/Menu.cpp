@@ -13,7 +13,7 @@ void Menu::welcome() {
 
 void Menu::teacherMenu() {
     clearScreen();
-    cout << "=======教师功能菜单=======" << endl;
+    cout << "=======教师功能菜单======" << endl;
     cout << "|1. 添加学生信息         |" << endl;
     cout << "|2. 查询学生信息         |" << endl;
     cout << "|3. 排序学生成绩         |" << endl;
@@ -21,7 +21,7 @@ void Menu::teacherMenu() {
     cout << "|5. 修改学生信息         |" << endl;
     cout << "|6. 删除学生信息         |" << endl;
     cout << "|7. 返回上级菜单         |" << endl;
-    cout << "========================" << endl;
+    cout << "=======================" << endl;
     cout << "请输入:";
 }
 

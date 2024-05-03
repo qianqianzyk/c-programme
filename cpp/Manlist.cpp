@@ -1,8 +1,8 @@
 #include "../hpp/Manlist.hpp"
 #include <fstream>
 
-void Manlist::addManager(string &usernamev, string &passwordv, int &userTypev, int &statusv) {
-    Manager *p = new Manager(usernamev, passwordv, userTypev, statusv);
+void Manlist::addManager(string &usernamev, string &passwordv, int &userTypev, int &statusv, string &classmanagev) {
+    Manager *p = new Manager(usernamev, passwordv, userTypev, statusv, classmanagev);
     p->next = head->next;
     head->next = p;
     size++;

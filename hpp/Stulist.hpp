@@ -20,6 +20,15 @@ public:
     // 添加学生
     void addStudent(string &namev, string &genderv, string &idv, string &classNamev, int (&scoresv)[4]);
 
+    // 老师添加学生
+    void addStudentByTeacher(string classmanagev);
+
+    // 查看学生是否已经存在
+    Student *checkifexist(string idv);
+
+    // 写入文件
+    void write();
+
 //    // Function to display all students
 //    void displayAllStudents() const {
 //        Student *current = head;
