@@ -1,5 +1,7 @@
 #include "../hpp/Menu.hpp"
 
+using namespace std;
+
 void Menu::welcome() {
     clearScreen();
     cout << "=========Menu==========" << endl;
@@ -13,7 +15,7 @@ void Menu::welcome() {
 
 void Menu::teacherMenu() {
     clearScreen();
-    cout << "=======教师功能菜单======" << endl;
+    cout << "======教师功能菜单=======" << endl;
     cout << "|1. 添加学生信息         |" << endl;
     cout << "|2. 查询学生信息         |" << endl;
     cout << "|3. 排序学生成绩         |" << endl;

@@ -1,6 +1,8 @@
 #include "../hpp/Manlist.hpp"
 #include <fstream>
 
+using namespace std;
+
 void Manlist::addManager(string &usernamev, string &passwordv, int &userTypev, int &statusv, string &classmanagev) {
     Manager *p = new Manager(usernamev, passwordv, userTypev, statusv, classmanagev);
     p->next = head->next;
@@ -17,7 +19,7 @@ Manager *Manlist::login() {
     cin >> passwordv;
 
     Manager *checkstatus = findManagerByUsername(usernamev);
-    if (checkstatus->getstatus() == 2) {
+    if (checkstatus != nullptr && checkstatus->getstatus() == 2) {
         cout << "您的账号已被锁定!请联系管理员." << endl;
         return nullptr;
     }
@@ -91,7 +93,8 @@ void Manlist::write() {
         out << p->getusername() << ' ';
         out << p->getpassword() << ' ';
         out << p->getuserType() << ' ';
-        out << p->getstatus() << ' ' << endl;
+        out << p->getstatus() << ' ';
+        out << p->getclassmanage() << ' ' << endl;
         p = p->next;
     }
     out.close();
@@ -114,6 +117,7 @@ void Manlist::showAllManagers() {
         cout << "Password: " << current->getpassword() << endl;
         cout << "User Type: " << current->getuserType() << endl;
         cout << "Status: " << current->getstatus() << endl;
+        cout << "ClassManage" << current->getclassmanage() << endl;
         cout << "------------------------" << endl;
 
         current = current->next;

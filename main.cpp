@@ -30,7 +30,7 @@ int main() {
     }
     inManager.close();
 
-    int choice_1, choice_2;
+    int choice_1, choice_2, choice_3;
 
     process1:
     Menu::welcome();
@@ -47,6 +47,37 @@ int main() {
                         stulist.addStudentByTeacher(target->getclassmanage());
                         goto process2;
                         break;
+                    }
+                    case 2: {//查询学生信息
+                        Menu::howfind();
+                        cin >> choice_3;
+                        switch (choice_3) {
+                            case 1: {//根据学号
+                                stulist.findStudentByID(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 2: {//根据姓名
+                                stulist.findStudentsByName(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 3: {//根据班级
+                                stulist.findStudentsByClass(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 4: {
+                                goto process2;
+                                break;
+                            }
+                            default: {
+                                cout << "请输入有效值!" << endl;
+                                goto process2;
+                                break;
+                            }
+
+                        }
                     }
                     case 7: {
                         goto process1;

@@ -38,7 +38,7 @@ public:
 
     int gettotalScore() const { return totalScore; }
 
-    int getaverageScore() const { return averageScore; }
+    double getaverageScore() const { return averageScore; }
 
     // 计算总分
     void calculateTotalScore();

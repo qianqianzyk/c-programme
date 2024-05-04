@@ -1,5 +1,7 @@
 #include "../hpp/Manager.hpp"
 
+using namespace std;
+
 //bool Manager::manageridentity(){
 //    system("cls");
 //    string usernamev,passwordv;

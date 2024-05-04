@@ -1,5 +1,7 @@
 #include "../hpp/Student.hpp"
 
+using namespace std;
+
 void Student::calculateTotalScore() {
     totalScore = 0;
     for (int i = 0; i < 4; ++i) {
@@ -8,13 +10,13 @@ void Student::calculateTotalScore() {
 }
 
 void Student::calculateAverageScore() {
-    averageScore = static_cast<double>(totalScore) / 4.0;
+    averageScore = totalScore / 4.0;
 }
 
 void Student::readscores(int (&scoresv)[4]) {
     for (int i = 0; i < 4; ++i) {
         this->scores[i] = scoresv[i];
     }
-    calculateAverageScore();
     calculateTotalScore();
+    calculateAverageScore();
 }

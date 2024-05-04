@@ -29,20 +29,18 @@ public:
     // 写入文件
     void write();
 
-//    // Function to display all students
-//    void displayAllStudents() const {
-//        Student *current = head;
-//        while (current != nullptr) {
-//            cout << "Name: " << current->name << ", Gender: " << current->gender << ", ID: " << current->id
-//                 << ", Class: " << current->className;
-//            cout << ", Scores: ";
-//            for (int i = 0; i < 4; ++i) {
-//                cout << current->scores[i] << " ";
-//            }
-//            cout << ", Total Score: " << current->totalScore << ", Average Score: " << current->averageScore << endl;
-//            current = current->next;
-//        }
-//    }
+    // 根据学号查找学生
+    void findStudentByID(string classmanagev);
+
+    // 根据姓名查找学生(模糊查找)
+    void findStudentsByName(string classmanagev);
+
+    // 根据班级查找学生
+    void findStudentsByClass(string classmanagev);
+
+    // 展示所有学生
+    void showAllStudents();
+
 };
 
 

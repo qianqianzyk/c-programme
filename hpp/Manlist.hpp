@@ -3,6 +3,8 @@
 
 #include "../hpp/Manager.hpp"
 
+using namespace std;
+
 class Manlist {
 private:
     Manager *head;
