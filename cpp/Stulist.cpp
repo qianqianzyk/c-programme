@@ -188,7 +188,7 @@ void Stulist::sortStudentsByID(string classmanagev) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
              << " ";
         const int *scores = sortedList->getscores();
         for (int i = 0; i < 4; ++i) {
@@ -238,7 +238,7 @@ void Stulist::sortStudentsBySubjectScore(string classmanagev) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
              << " ";
         const int *scores = sortedList->getscores();
         for (int i = 0; i < 4; ++i) {
@@ -284,7 +284,7 @@ void Stulist::sortStudentsByTotalScore(string classmanagev) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
              << " ";
         const int *scores = sortedList->getscores();
         for (int i = 0; i < 4; ++i) {
@@ -331,7 +331,7 @@ void Stulist::sortStudentsByAverageScore(string classmanagev) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
              << " ";
         const int *scores = sortedList->getscores();;
         for (int i = 0; i < 4; ++i) {

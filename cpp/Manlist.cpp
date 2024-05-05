@@ -196,6 +196,196 @@ void Manlist::managerFindStudentsByClass(Stulist stulistv) {
     }
 }
 
+void Manlist::managerSortStudentsByID(Stulist stulistv) {
+
+    Student *students = stulistv.getHead()->next;
+
+    // 插入排序对链表中的学生按学号升序排序
+    Student *sortedList = nullptr;
+    while (students) {
+        // 从未排序链表中移除一个节点
+        Student *current = students;
+        students = students->next;
+        // 将节点插入到已排序链表中的正确位置
+        if (!sortedList || current->getid() < sortedList->getid()) {
+            // 将节点插入到已排序链表的开头
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            // 在已排序链表中找到插入位置
+            Student *temp = sortedList;
+            while (temp->next && temp->next->getid() < current->getid()) {
+                temp = temp->next;
+            }
+            // 将节点插入到已排序链表的中间
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    cout << "排序成功!(按学号升序排序)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
+    while (sortedList) {
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
+        const int *scores = sortedList->getscores();
+        for (int i = 0; i < 4; ++i) {
+            cout << scores[i] << ' ';
+        }
+        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        // 移动到下一个节点并释放当前节点的内存
+        Student *temp = sortedList;
+        sortedList = sortedList->next;
+        delete temp;
+    }
+    cout << "----------------------------------------------------------------------------------" << endl;
+}
+
+void Manlist::managerSortStudentsBySubjectScore(Stulist stulistv) {
+
+    Student *students = stulistv.getHead()->next;
+
+    int index;
+    cout << "请输入您要根据哪门成绩进行排序(1:高数 2:程C 3:离散 4:大物 )" << endl;
+    cin >> index;
+    // 插入排序按指定科目成绩降序排序
+    Student *sortedList = nullptr;
+    while (students) {
+        // 从未排序链表中移除一个节点
+        Student *current = students;
+        students = students->next;
+        // 将节点插入到已排序链表中的正确位置
+        if (!sortedList || current->getscores()[index - 1] > sortedList->getscores()[index - 1]) {
+            // 将节点插入到已排序链表的开头
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            // 在已排序链表中找到插入位置
+            Student *temp = sortedList;
+            while (temp->next && temp->next->getscores()[index - 1] > current->getscores()[index - 1]) {
+                temp = temp->next;
+            }
+            // 将节点插入到已排序链表的中间
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    cout << "排序成功!(按单科成绩降序排序)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
+    while (sortedList) {
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
+        const int *scores = sortedList->getscores();
+        for (int i = 0; i < 4; ++i) {
+            cout << scores[i] << ' ';
+        }
+        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        // 移动到下一个节点并释放当前节点的内存
+        Student *temp = sortedList;
+        sortedList = sortedList->next;
+        delete temp;
+    }
+    cout << "----------------------------------------------------------------------------------" << endl;
+}
+
+void Manlist::managerSortStudentsByTotalScore(Stulist stulistv) {
+
+    Student *students = stulistv.getHead()->next;
+
+    // 插入排序按总分降序排序
+    Student *sortedList = nullptr;
+    while (students) {
+        // 从未排序链表中移除一个节点
+        Student *current = students;
+        students = students->next;
+        // 将节点插入到已排序链表中的正确位置
+        if (!sortedList || current->gettotalScore() > sortedList->gettotalScore()) {
+            // 将节点插入到已排序链表的开头
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            // 在已排序链表中找到插入位置
+            Student *temp = sortedList;
+            while (temp->next && temp->next->gettotalScore() > current->gettotalScore()) {
+                temp = temp->next;
+            }
+            // 将节点插入到已排序链表的中间
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    cout << "排序成功!(按总分降序排序)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
+    while (sortedList) {
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
+        const int *scores = sortedList->getscores();
+        for (int i = 0; i < 4; ++i) {
+            cout << scores[i] << ' ';
+        }
+        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        // 移动到下一个节点并释放当前节点的内存
+        Student *temp = sortedList;
+        sortedList = sortedList->next;
+        delete temp;
+    }
+    cout << "----------------------------------------------------------------------------------" << endl;
+}
+
+void Manlist::managerSortStudentsByAverageScore(Stulist stulistv) {
+
+    Student *students = stulistv.getHead()->next;
+
+    // 插入排序按平均分降序排序
+    Student *sortedList = nullptr;
+    while (students) {
+        // 从未排序链表中移除一个节点
+        Student *current = students;
+        students = students->next;
+        // 将节点插入到已排序链表中的正确位置
+        if (!sortedList || current->getaverageScore() > sortedList->getaverageScore()) {
+            // 将节点插入到已排序链表的开头
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            // 在已排序链表中找到插入位置
+            Student *temp = sortedList;
+            while (temp->next && temp->next->getaverageScore() > current->getaverageScore()) {
+                temp = temp->next;
+            }
+            // 将节点插入到已排序链表的中间
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    cout << "排序成功!(按平均分降序排序)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
+    while (sortedList) {
+        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
+        const int *scores = sortedList->getscores();;
+        for (int i = 0; i < 4; ++i) {
+            cout << scores[i] << ' ';
+        }
+        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        // 移动到下一个节点并释放当前节点的内存
+        Student *temp = sortedList;
+        sortedList = sortedList->next;
+        delete temp;
+    }
+    cout << "----------------------------------------------------------------------------------" << endl;
+}
 
 bool Manlist::delmanager(string usernamev) {
     Manager *p = head->next, *pre = head;

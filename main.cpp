@@ -30,7 +30,7 @@ int main() {
     }
     inManager.close();
 
-    int choice_1, choice_2, choice_3, choice_4, choice_5, choice_6;
+    int choice_1, choice_2, choice_3, choice_4, choice_5, choice_6, choice_7;
 
     process1:
     Menu::welcome();
@@ -173,6 +173,41 @@ int main() {
                                 break;
                             }
                             case 4: {
+                                goto process3;
+                                break;
+                            }
+                            default: {
+                                cout << "请输入有效值!" << endl;
+                                goto process3;
+                                break;
+                            }
+                        }
+                    }
+                    case 3: {//排序
+                        Menu::howsort();
+                        cin >> choice_6;
+                        switch (choice_6) {
+                            case 1: {//根据学号
+                                manlist.managerSortStudentsByID(stulist);
+                                goto process3;
+                                break;
+                            }
+                            case 2: {//根据单科成绩
+                                manlist.managerSortStudentsBySubjectScore(stulist);
+                                goto process3;
+                                break;
+                            }
+                            case 3: {//根据平均分
+                                manlist.managerSortStudentsByAverageScore(stulist);
+                                goto process3;
+                                break;
+                            }
+                            case 4: {//根据总分
+                                manlist.managerSortStudentsByTotalScore(stulist);
+                                goto process3;
+                                break;
+                            }
+                            case 5: {
                                 goto process3;
                                 break;
                             }

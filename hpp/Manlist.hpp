@@ -41,6 +41,18 @@ public:
     // 管理员根据班级查询学生
     void managerFindStudentsByClass(Stulist stulistv);
 
+    // 管理员根据学号升序排序学生
+    void managerSortStudentsByID(Stulist stulistv);
+
+    // 管理员根据单科成绩降序排序学生
+    void managerSortStudentsBySubjectScore(Stulist stulistv);
+
+    // 管理员根据总分降序排序学生
+    void managerSortStudentsByTotalScore(Stulist stulistv);
+
+    // 管理员根据个人平均分降序排序学生
+    void managerSortStudentsByAverageScore(Stulist stulistv);
+
     // 删除账号
     bool delmanager(string usernamev);
 
