@@ -30,7 +30,7 @@ int main() {
     }
     inManager.close();
 
-    int choice_1, choice_2, choice_3, choice_4, choice_5, choice_6, choice_7;
+    int choice_1, choice_2, choice_3, choice_4, choice_5, choice_6;
 
     process1:
     Menu::welcome();
@@ -217,6 +217,11 @@ int main() {
                                 break;
                             }
                         }
+                    }
+                    case 4: {//统计
+                        manlist.managerCountStudentsScore(stulist);
+                        goto process3;
+                        break;
                     }
                     case 11: {
                         goto process1;

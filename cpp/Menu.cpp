@@ -74,15 +74,15 @@ void Menu::countscore() {
     cout << "请输入:";
 }
 
-void Menu::howcount() {
-    clearScreen();
-    cout << "=======================" << endl;
-    cout << "|1. 根据班级            |" << endl;
-    cout << "|2. 根据科目            |" << endl;
-    cout << "|3. 返回上级菜单         |" << endl;
-    cout << "=======================" << endl;
-    cout << "请输入:";
-}
+//void Menu::howcount() {
+//    clearScreen();
+//    cout << "=======================" << endl;
+//    cout << "|1. 根据班级            |" << endl;
+//    cout << "|2. 根据科目            |" << endl;
+//    cout << "|3. 返回上级菜单         |" << endl;
+//    cout << "=======================" << endl;
+//    cout << "请输入:";
+//}
 
 void Menu::howsort() {
     clearScreen();

@@ -17,6 +17,23 @@ public:
         size = 0;
     }
 
+    Stulist(const Stulist& other) {
+        head = new Student;
+        head->next = nullptr;
+        size = 0;
+
+        Student* p = other.head->next;
+        Student* tail = head;
+        while (p) {
+            Student* newNode = new Student(*p);
+
+            tail->next = newNode;
+            tail = newNode;
+
+            p = p->next;
+        }
+    }
+
     // 获取表头
     Student *getHead() { return head; }
 

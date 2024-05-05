@@ -53,6 +53,12 @@ public:
     // 管理员根据个人平均分降序排序学生
     void managerSortStudentsByAverageScore(Stulist stulistv);
 
+    // 管理员根据班级统计学生成绩
+    void managerCountStudentsScore(Stulist stulistv);
+
+    // 复制链表
+    Stulist *copyStulist(Stulist stulistv);
+
     // 删除账号
     bool delmanager(string usernamev);
 
