@@ -2,6 +2,7 @@
 #define C_PROGRAMME_MANLIST_H
 
 #include "../hpp/Manager.hpp"
+#include "../hpp/Stulist.hpp"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ public:
         size = 0;
     }
 
-    // 添加老师账号
+    // 添加账号
     void addManager(string &usernamev, string &passwordv, int &userTypev, int &statusv, string &classmanagev);
 
     // 登录
@@ -27,6 +28,9 @@ public:
 
     // 查找账号是否存在
     Manager *findManagerByUsername(const string &username);
+
+    // 管理员添加学生
+    void addStudentByManager(Stulist stulistv);
 
     // 删除账号
     bool delmanager(string usernamev);

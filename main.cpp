@@ -30,7 +30,7 @@ int main() {
     }
     inManager.close();
 
-    int choice_1, choice_2, choice_3, choice_4;
+    int choice_1, choice_2, choice_3, choice_4, choice_5;
 
     process1:
     Menu::welcome();
@@ -142,6 +142,27 @@ int main() {
                 break;
             }
             case 2: {
+                Manager *target = manlist.login();
+                if (target == nullptr) goto process1;
+                process3:
+                Menu::managerMenu();
+                cin >> choice_5;
+                switch (choice_5) {
+                    case 1: {//管理员添加学生信息
+                        manlist.addStudentByManager(stulist);
+                        goto process3;
+                        break;
+                    }
+                    case 11: {
+                        goto process1;
+                        break;
+                    }
+                    default: {
+                        cout << "请输入有效值!" << endl;
+                        goto process3;
+                        break;
+                    }
+                }
                 break;
             }
             case 3: {

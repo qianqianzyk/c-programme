@@ -1,3 +1,4 @@
+#include "../hpp/Stulist.hpp"
 #include "../hpp/Manlist.hpp"
 #include <fstream>
 
@@ -69,6 +70,28 @@ Manager *Manlist::findManagerByUsername(const string &usernamev) {
         current = current->next;
     }
     return nullptr;
+}
+
+void Manlist::addStudentByManager(Stulist stulistv) {
+    string namev, genderv, idv, classNamev;
+    int scoresv[4];
+    cout << "请输入您要添加学生的姓名:" << endl;
+    cin >> namev;
+    cout << "请输入您要添加学生的性别:" << endl;
+    cin >> genderv;
+    cout << "请输入您要添加学生的学号:" << endl;
+    cin >> idv;
+    cout << "请输入您要添加学生的班级:" << endl;
+    cin >> classNamev;
+    cout << "请输入您要添加学生的成绩(四门分别是高数,程C,离散,大物.请按顺序填写!):" << endl;
+    for (int i = 0; i < 4; ++i) cin >> scoresv[i];
+    Student *stu = stulistv.checkifexist(idv);
+    if (stu != nullptr) {
+        cout << "您添加的学生已经存在!" << endl;
+        return;
+    }
+    stulistv.addStudent(namev, genderv, idv, classNamev, scoresv);
+    cout << "添加成功!" << endl;
 }
 
 bool Manlist::delmanager(string usernamev) {
