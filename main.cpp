@@ -124,6 +124,11 @@ int main() {
                         goto process2;
                         break;
                     }
+                    case 6: {//删除学生信息
+                        stulist.deleteStudentByID(target->getclassmanage());
+                        goto process2;
+                        break;
+                    }
                     case 7: {
                         goto process1;
                         break;

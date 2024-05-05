@@ -59,6 +59,9 @@ public:
     // 修改学生信息
     void updateStudentByID(string classmanagev);
 
+    // 删除学生信息
+    void deleteStudentByID(string classmanagev);
+
     // 展示所有学生
     void showAllStudents();
 

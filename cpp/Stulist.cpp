@@ -481,6 +481,34 @@ void Stulist::updateStudentByID(string classmanagev) {
     }
 }
 
+void Stulist::deleteStudentByID(string classmanagev) {
+    string idv;
+    cout << "请输入您要删除学生信息的学号:" << endl;
+    cin >> idv;
+
+    Student *current = head->next;
+    Student *pre = nullptr;
+    while (current != nullptr) {
+        if (current->getid() == idv && classmanagev != current->getclassName()) {
+            cout << "很抱歉,您无权操作!请联系管理员." << endl;
+            return;
+        }
+        if (current->getid() == idv && classmanagev == current->getclassName()) {
+            if (pre == nullptr) {
+                head->next = current->next;
+            } else {
+                pre->next = current->next;
+            }
+            delete current;
+            cout << "成功删除学生信息!" << endl;
+            return;
+        }
+        pre = current;
+        current = current->next;
+    }
+
+    cout << "很抱歉，并未找到该学生!" << endl;
+}
 
 void Stulist::showAllStudents() {
     Student *current = head->next;
