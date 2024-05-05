@@ -50,6 +50,9 @@ public:
     // 根据平均分降序排序
     void sortStudentsByAverageScore(string classmanagev);
 
+    // 统计学生信息
+    void countStudentsScore(string classmanagev);
+
     // 查找同一个班的学生
     Student *findTheSameClassStudents(std::string classmanagev);
 

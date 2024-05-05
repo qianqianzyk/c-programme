@@ -114,6 +114,11 @@ int main() {
                             }
                         }
                     }
+                    case 4: {//统计学生成绩
+                        stulist.countStudentsScore(target->getclassmanage());
+                        goto process2;
+                        break;
+                    }
                     case 7: {
                         goto process1;
                         break;

@@ -183,10 +183,12 @@ void Stulist::sortStudentsByID(string classmanagev) {
     }
 
     cout << "排序成功!(按学号升序排序)" << endl << classmanagev << "班学生列表:" << endl;
-    cout << "(姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
     cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
     while (sortedList) {
-        cout << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid() << " ";
+        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
         const int *scores = sortedList->getscores();
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
@@ -231,10 +233,12 @@ void Stulist::sortStudentsBySubjectScore(string classmanagev) {
     }
 
     cout << "排序成功!(按单科成绩降序排序)" << endl << classmanagev << "班学生列表:" << endl;
-    cout << "(姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
     cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
     while (sortedList) {
-        cout << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid() << " ";
+        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
         const int *scores = sortedList->getscores();
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
@@ -275,10 +279,12 @@ void Stulist::sortStudentsByTotalScore(string classmanagev) {
     }
 
     cout << "排序成功!(按总分降序排序)" << endl << classmanagev << "班学生列表:" << endl;
-    cout << "(姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
     cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
     while (sortedList) {
-        cout << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid() << " ";
+        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
         const int *scores = sortedList->getscores();
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
@@ -320,11 +326,13 @@ void Stulist::sortStudentsByAverageScore(string classmanagev) {
     }
 
     cout << "排序成功!(按平均分降序排序)" << endl << classmanagev << "班学生列表:" << endl;
-    cout << "(姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
+    cout << "(名次||姓名||性别||学号||成绩.高数||成绩.程C||成绩.离散||成绩.大物||总分||平均分)" << endl;
     cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
     while (sortedList) {
-        cout << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid() << " ";
-        const int *scores = sortedList->getscores();
+        cout << number++ << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
+             << " ";
+        const int *scores = sortedList->getscores();;
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
         }
@@ -334,6 +342,75 @@ void Stulist::sortStudentsByAverageScore(string classmanagev) {
         sortedList = sortedList->next;
         delete temp;
     }
+    cout << "----------------------------------------------------------------------------------" << endl;
+}
+
+void Stulist::countStudentsScore(string classmanagev) {
+
+    Student *classStudents = findTheSameClassStudents(classmanagev);
+
+    // 插入排序按总分降序排序
+    Student *sortedList = nullptr;
+    while (classStudents) {
+        // 从未排序链表中移除一个节点
+        Student *current = classStudents;
+        classStudents = classStudents->next;
+        // 将节点插入到已排序链表中的正确位置
+        if (!sortedList || current->gettotalScore() > sortedList->gettotalScore()) {
+            // 将节点插入到已排序链表的开头
+            current->next = sortedList;
+            sortedList = current;
+        } else {
+            // 在已排序链表中找到插入位置
+            Student *temp = sortedList;
+            while (temp->next && temp->next->gettotalScore() > current->gettotalScore()) {
+                temp = temp->next;
+            }
+            // 将节点插入到已排序链表的中间
+            current->next = temp->next;
+            temp->next = current;
+        }
+    }
+
+    cout << "统计成功!" << endl << classmanagev << "班学生成绩:" << endl;
+    cout << "----------------------------------------------------------------------------------" << endl;
+    int number = 1;
+    double totalAverage = 0.0;
+    int numAbove60[4] = {0};
+    double totalSubjectScores[4] = {0};
+    while (sortedList) {
+        const int *scores = sortedList->getscores();
+        for (int i = 0; i < 4; ++i) {
+            totalSubjectScores[i] += scores[i];
+            if (scores[i] > 60) {
+                numAbove60[i]++;
+            }
+        }
+        totalAverage += sortedList->gettotalScore();
+
+        Student *temp = sortedList;
+        sortedList = sortedList->next;
+        delete temp;
+        number++;
+    }
+    // 输出班级总人数
+    cout << "班级总人数:" << number - 1 << endl;
+    cout << endl;
+    // 输出各科成绩平均分
+    cout << "各科成绩平均分:" << endl;
+    const char *subjectNames[4] = {"高数", "程C", "离散", "大物"};
+    for (int i = 0; i < 4; ++i) {
+        cout << subjectNames[i] << ": " << totalSubjectScores[i] / ((number - 1) * 1.0) << endl;
+    }
+    cout << endl;
+    // 输出各科成绩超过60分的人数
+    cout << "各科及格的人数:" << endl;
+    for (int i = 0; i < 4; ++i) {
+        cout << subjectNames[i] << ": " << numAbove60[i] << endl;
+    }
+    cout << endl;
+    // 输出总分的平均分
+    cout << "班级平均分:" << totalAverage / ((number - 1) * 1.0) << endl;
     cout << "----------------------------------------------------------------------------------" << endl;
 }
 
