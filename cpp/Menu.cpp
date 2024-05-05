@@ -29,7 +29,7 @@ void Menu::teacherMenu() {
 
 void Menu::managerMenu() {
     clearScreen();
-    cout << "======管理员功能菜单=====" << endl;
+    cout << "=====管理员功能菜单=====" << endl;
     cout << "|1.  添加学生信息        |" << endl;
     cout << "|2.  查询学生信息        |" << endl;
     cout << "|4.  排序学生成绩        |" << endl;

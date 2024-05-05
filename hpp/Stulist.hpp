@@ -17,6 +17,9 @@ public:
         size = 0;
     }
 
+    // 获取表头
+    Student *getHead() { return head; }
+
     // 添加学生
     void addStudent(string &namev, string &genderv, string &idv, string &classNamev, int (&scoresv)[4]);
 

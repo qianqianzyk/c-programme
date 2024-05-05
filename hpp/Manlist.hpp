@@ -32,6 +32,15 @@ public:
     // 管理员添加学生
     void addStudentByManager(Stulist stulistv);
 
+    // 管理员根据学号查询学生
+    void managerFindStudentByID(Stulist stulistv);
+
+    // 管理员根据姓名查询学生
+    void managerFindStudentsByName(Stulist stulistv);
+
+    // 管理员根据班级查询学生
+    void managerFindStudentsByClass(Stulist stulistv);
+
     // 删除账号
     bool delmanager(string usernamev);
 
