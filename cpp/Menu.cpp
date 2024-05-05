@@ -85,7 +85,7 @@ void Menu::howcount() {
 
 void Menu::howsort() {
     clearScreen();
-    cout << "=======================" << endl;
+    cout << "======================" << endl;
     cout << "|1. 根据学生学号         |" << endl;
     cout << "|2. 根据单科成绩         |" << endl;
     cout << "|3. 根据平均成绩         |" << endl;

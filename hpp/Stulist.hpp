@@ -38,10 +38,24 @@ public:
     // 根据班级查找学生
     void findStudentsByClass(string classmanagev);
 
+    // 根据学号升序排序
+    void sortStudentsByID(string classmanagev);
+
+    // 根据单科成绩降序排序
+    void sortStudentsBySubjectScore(string classmanagev);
+
+    // 根据总分降序排序
+    void sortStudentsByTotalScore(string classmanagev);
+
+    // 根据平均分降序排序
+    void sortStudentsByAverageScore(string classmanagev);
+
+    // 查找同一个班的学生
+    Student *findTheSameClassStudents(std::string classmanagev);
+
     // 展示所有学生
     void showAllStudents();
 
 };
-
 
 #endif

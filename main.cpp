@@ -30,7 +30,7 @@ int main() {
     }
     inManager.close();
 
-    int choice_1, choice_2, choice_3;
+    int choice_1, choice_2, choice_3, choice_4;
 
     process1:
     Menu::welcome();
@@ -77,6 +77,41 @@ int main() {
                                 break;
                             }
 
+                        }
+                    }
+                    case 3: {//排序
+                        Menu::howsort();
+                        cin >> choice_4;
+                        switch (choice_4) {
+                            case 1: {//根据学号
+                                stulist.sortStudentsByID(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 2: {//根据单科成绩
+                                stulist.sortStudentsBySubjectScore(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 3: {//根据平均分
+                                stulist.sortStudentsByAverageScore(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 4: {//根据总分
+                                stulist.sortStudentsByTotalScore(target->getclassmanage());
+                                goto process2;
+                                break;
+                            }
+                            case 5: {
+                                goto process2;
+                                break;
+                            }
+                            default: {
+                                cout << "请输入有效值!" << endl;
+                                goto process2;
+                                break;
+                            }
                         }
                     }
                     case 7: {
