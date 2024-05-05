@@ -56,6 +56,9 @@ public:
     // 查找同一个班的学生
     Student *findTheSameClassStudents(std::string classmanagev);
 
+    // 修改学生信息
+    void updateStudentByID(string classmanagev);
+
     // 展示所有学生
     void showAllStudents();
 

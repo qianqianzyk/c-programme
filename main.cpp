@@ -119,6 +119,11 @@ int main() {
                         goto process2;
                         break;
                     }
+                    case 5: {//修改学生信息
+                        stulist.updateStudentByID(target->getclassmanage());
+                        goto process2;
+                        break;
+                    }
                     case 7: {
                         goto process1;
                         break;

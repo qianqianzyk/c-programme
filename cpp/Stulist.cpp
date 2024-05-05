@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <fstream>
 #include "../hpp/Stulist.hpp"
 #include "../hpp/Manlist.hpp"
@@ -414,7 +415,7 @@ void Stulist::countStudentsScore(string classmanagev) {
     cout << "----------------------------------------------------------------------------------" << endl;
 }
 
-Student *Stulist::findTheSameClassStudents(std::string classmanagev) {
+Student *Stulist::findTheSameClassStudents(string classmanagev) {
     // 创建一个新的链表来存储给定班级的学生
     Student *classStudents = nullptr;
     // 遍历链表，将给定班级的学生添加到新链表中
@@ -429,6 +430,57 @@ Student *Stulist::findTheSameClassStudents(std::string classmanagev) {
     }
     return classStudents;
 }
+
+void Stulist::updateStudentByID(string classmanagev) {
+    string idv;
+    cout << "请输入您要修改学生信息的学号:" << endl;
+    cin >> idv;
+    Student *stu = checkifexist(idv);
+    if (stu == nullptr) {
+        cout << "很抱歉，并未找到该学生!" << endl;
+        return;
+    } else {
+        if (stu->getclassName() == classmanagev) {
+            cout << "----------------------------------" << endl;
+            cout << "当前学生信息为:" << endl;
+            cout << "姓名:" << stu->getname() << endl;
+            cout << "性别:" << stu->getgender() << endl;
+            cout << "学号:" << stu->getid() << endl;
+            cout << "班级:" << stu->getclassName() << endl;
+            cout << "成绩(高数,程C,离散,大物):";
+            const int *scores = stu->getscores();
+            for (int i = 0; i < 4; ++i) {
+                cout << scores[i] << ' ';
+            }
+            cout << endl;
+            cout << "总分:" << stu->gettotalScore() << endl;
+            cout << "平均分:" << stu->getaverageScore() << endl;
+            cout << "----------------------------------" << endl;
+
+            cout << "请输入修改后的信息(注意:如果信息不变请输入原来的!):" << endl;
+            string namev, genderv, classNamev;
+            int scoresv[4];
+            cout << "姓名:" << endl;
+            cin >> namev;
+            cout << "性别:" << endl;
+            cin >> genderv;
+            cout << "班级:" << endl;
+            cin >> classNamev;
+            cout << "成绩(高数,程C,离散,大物):" << endl;
+            for (int i = 0; i < 4; ++i) cin >> scoresv[i];
+
+            stu->setName(namev);
+            stu->setGender(genderv);
+            stu->setClassName(classNamev);
+            stu->readscores(scoresv);
+
+            cout << "学生信息修改成功!" << endl;
+        } else {
+            cout << "很抱歉,您无权操作!请联系管理员." << endl;
+        }
+    }
+}
+
 
 void Stulist::showAllStudents() {
     Student *current = head->next;

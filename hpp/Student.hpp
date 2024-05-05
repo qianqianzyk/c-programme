@@ -40,6 +40,16 @@ public:
 
     double getaverageScore() const { return averageScore; }
 
+    void setName(const string &namev) { name = namev; }
+
+    void setGender(const string &genderv) { gender = genderv; }
+
+    void setId(const string &idv) { id = idv; }
+
+    void setClassName(const string &classNamev) { className = classNamev; }
+
+    void setScores(const int (&scoresv)[4]) { memcpy(scores, scoresv, sizeof(scores)); }
+
     // 计算总分
     void calculateTotalScore();
 
