@@ -223,6 +223,16 @@ int main() {
                         goto process3;
                         break;
                     }
+                    case 5: {//修改学生信息
+                        manlist.managerUpdateStudentByID(stulist);
+                        goto process3;
+                        break;
+                    }
+                    case 6: {//删除学生信息
+                        manlist.managerDeleteStudentByID(stulist);
+                        goto process3;
+                        break;
+                    }
                     case 11: {
                         goto process1;
                         break;

@@ -75,7 +75,7 @@ Manager *Manlist::findManagerByUsername(const string &usernamev) {
     return nullptr;
 }
 
-void Manlist::addStudentByManager(Stulist stulistv) {
+void Manlist::addStudentByManager(Stulist &stulistv) {
     string namev, genderv, idv, classNamev;
     int scoresv[4];
     cout << "请输入您要添加学生的姓名:" << endl;
@@ -97,7 +97,7 @@ void Manlist::addStudentByManager(Stulist stulistv) {
     cout << "添加成功!" << endl;
 }
 
-void Manlist::managerFindStudentByID(Stulist stulistv) {
+void Manlist::managerFindStudentByID(Stulist &stulistv) {
     string idv;
     cout << "请输入您要查找学生的学号:" << endl;
     cin >> idv;
@@ -123,7 +123,7 @@ void Manlist::managerFindStudentByID(Stulist stulistv) {
     cout << "----------------------------------" << endl;
 }
 
-void Manlist::managerFindStudentsByName(Stulist stulistv) {
+void Manlist::managerFindStudentsByName(Stulist &stulistv) {
     string namev;
     cout << "请输入您要查找学生的姓名(支持模糊查找):" << endl;
     cin >> namev;
@@ -158,7 +158,7 @@ void Manlist::managerFindStudentsByName(Stulist stulistv) {
     }
 }
 
-void Manlist::managerFindStudentsByClass(Stulist stulistv) {
+void Manlist::managerFindStudentsByClass(Stulist &stulistv) {
     string classv;
     cout << "请输入您要查找学生的班级(支持模糊查找):" << endl;
     cin >> classv;
@@ -197,7 +197,7 @@ void Manlist::managerFindStudentsByClass(Stulist stulistv) {
     }
 }
 
-void Manlist::managerSortStudentsByID(Stulist stulistv) {
+void Manlist::managerSortStudentsByID(Stulist &stulistv) {
     Stulist *s = new Stulist(stulistv);
     Student *students = s->getHead()->next;
     // 插入排序对链表中的学生按学号升序排序
@@ -243,7 +243,7 @@ void Manlist::managerSortStudentsByID(Stulist stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
 }
 
-void Manlist::managerSortStudentsBySubjectScore(Stulist stulistv) {
+void Manlist::managerSortStudentsBySubjectScore(Stulist &stulistv) {
     Stulist *s = new Stulist(stulistv);
     Student *students = s->getHead()->next;
     int index;
@@ -292,7 +292,7 @@ void Manlist::managerSortStudentsBySubjectScore(Stulist stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
 }
 
-void Manlist::managerSortStudentsByTotalScore(Stulist stulistv) {
+void Manlist::managerSortStudentsByTotalScore(Stulist &stulistv) {
     Stulist *s = new Stulist(stulistv);
     Student *students = s->getHead()->next;
     // 插入排序按总分降序排序
@@ -338,7 +338,7 @@ void Manlist::managerSortStudentsByTotalScore(Stulist stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
 }
 
-void Manlist::managerSortStudentsByAverageScore(Stulist stulistv) {
+void Manlist::managerSortStudentsByAverageScore(Stulist &stulistv) {
     Stulist *s = new Stulist(stulistv);
     Student *students = s->getHead()->next;
     // 插入排序按平均分降序排序
@@ -384,7 +384,7 @@ void Manlist::managerSortStudentsByAverageScore(Stulist stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
 }
 
-void Manlist::managerCountStudentsScore(Stulist stulistv) {
+void Manlist::managerCountStudentsScore(Stulist &stulistv) {
     Stulist *s = new Stulist(stulistv);
     Student *students = s->getHead()->next;
 
@@ -397,6 +397,34 @@ void Manlist::managerCountStudentsScore(Stulist stulistv) {
 
     cout << "统计成功!" << endl;
     cout << "-----------------------------" << endl;
+
+    vector<pair<string, double>> classAverages;
+    for (auto &pair: classStudentsMap) {
+        string className = pair.first;
+        vector<Student *> &classStudents = pair.second;
+
+        double totalAverage = 0.0;
+        int number = classStudents.size();
+
+        for (Student *student: classStudents) {
+            totalAverage += student->gettotalScore();
+        }
+        totalAverage /= number;
+
+        classAverages.push_back(make_pair(className, totalAverage));
+    }
+
+    sort(classAverages.begin(), classAverages.end(), [](const pair<string, double> &a, const pair<string, double> &b) {
+        return a.second > b.second;
+    });
+
+    int rank = 1;
+    for (const auto &classAverage: classAverages) {
+        cout << "班级排名: " << rank++ << ". " << classAverage.first << "  平均分: " << classAverage.second << endl;
+    }
+
+    cout << "-----------------------------" << endl;
+
     for (auto &pair: classStudentsMap) {
         string className = pair.first;
         vector<Student *> &classStudents = pair.second;
@@ -453,6 +481,77 @@ void Manlist::managerCountStudentsScore(Stulist stulistv) {
         cout << "-----------------------------" << endl;
     }
 }
+
+void Manlist::managerUpdateStudentByID(Stulist &stulistv) {
+    string idv;
+    cout << "请输入您要修改学生信息的学号:" << endl;
+    cin >> idv;
+    Student *stu = stulistv.checkifexist(idv);
+    if (stu == nullptr) {
+        cout << "很抱歉，并未找到该学生!" << endl;
+        return;
+    }
+    cout << "----------------------------------" << endl;
+    cout << "当前学生信息为:" << endl;
+    cout << "姓名:" << stu->getname() << endl;
+    cout << "性别:" << stu->getgender() << endl;
+    cout << "学号:" << stu->getid() << endl;
+    cout << "班级:" << stu->getclassName() << endl;
+    cout << "成绩(高数,程C,离散,大物):";
+    const int *scores = stu->getscores();
+    for (int i = 0; i < 4; ++i) {
+        cout << scores[i] << ' ';
+    }
+    cout << endl;
+    cout << "总分:" << stu->gettotalScore() << endl;
+    cout << "平均分:" << stu->getaverageScore() << endl;
+    cout << "----------------------------------" << endl;
+
+    cout << "请输入修改后的信息(注意:如果信息不变请输入原来的!):" << endl;
+    string namev, genderv, classNamev;
+    int scoresv[4];
+    cout << "姓名:" << endl;
+    cin >> namev;
+    cout << "性别:" << endl;
+    cin >> genderv;
+    cout << "班级:" << endl;
+    cin >> classNamev;
+    cout << "成绩(高数,程C,离散,大物):" << endl;
+    for (int i = 0; i < 4; ++i) cin >> scoresv[i];
+
+    stu->setName(namev);
+    stu->setGender(genderv);
+    stu->setClassName(classNamev);
+    stu->readscores(scoresv);
+
+    cout << "学生信息修改成功!" << endl;
+}
+
+void Manlist::managerDeleteStudentByID(Stulist &stulistv) {
+    string idv;
+    cout << "请输入您要删除学生信息的学号:" << endl;
+    cin >> idv;
+
+    Student *current = stulistv.getHead()->next;
+    Student *pre = nullptr;
+    while (current != nullptr) {
+        if (current->getid() == idv) {
+            if (pre == nullptr) {
+                stulistv.getHead()->next = current->next;
+            } else {
+                pre->next = current->next;
+            }
+            delete current;
+            cout << "成功删除学生信息!" << endl;
+            return;
+        }
+        pre = current;
+        current = current->next;
+    }
+
+    cout << "很抱歉，并未找到该学生!" << endl;
+}
+
 
 bool Manlist::delmanager(string usernamev) {
     Manager *p = head->next, *pre = head;
