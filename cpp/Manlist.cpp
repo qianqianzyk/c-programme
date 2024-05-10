@@ -31,7 +31,7 @@ Manager *Manlist::login() {
     Manager *target = nullptr;
 
     while (wrongtime < 5) {
-        target = checkifexist(usernamev, passwordv);
+        target = checkiflogin(usernamev, passwordv);
         if (target != nullptr) {
             return target;
         } else {
@@ -54,10 +54,40 @@ Manager *Manlist::login() {
     return nullptr;
 }
 
-Manager *Manlist::checkifexist(string usernamev, string passwordv) {
+void Manlist::addTeacherByManager() {
+    string usernamev, passwordv, classmanagev;
+    cout << "请输入您要添加教师账号的用户名:" << endl;
+    cin >> usernamev;
+    cout << "请输入您要添加教师账号的密码:" << endl;
+    cin >> passwordv;
+    cout << "请输入您要添加教师账号的权限:" << endl;
+    cin >> classmanagev;
+        Manager *man = checkifexist(usernamev);
+        if (man != nullptr) {
+            cout << "您添加的教师账号已经存在!" << endl;
+            return;
+        }
+        Manager *p = new Manager(usernamev, passwordv, 1,1,classmanagev);
+        p->next = head->next;
+        head->next = p;
+        size++;
+        cout << "添加成功!" << endl;
+}
+
+Manager *Manlist::checkiflogin(string usernamev, string passwordv) {
     Manager *p = head->next;
     while (p) {
         if (p->getusername() == usernamev && p->getpassword() == passwordv)
+            return p;
+        p = p->next;
+    }
+    return nullptr;
+}
+
+Manager *Manlist::checkifexist(string usernamev) {
+    Manager *p = head->next;
+    while (p) {
+        if (p->getusername() == usernamev)
             return p;
         p = p->next;
     }
@@ -553,19 +583,23 @@ void Manlist::managerDeleteStudentByID(Stulist &stulistv) {
 }
 
 
-bool Manlist::delmanager(string usernamev) {
+void Manlist::delmanager() {
+    string usernamev;
+    cout << "请输入您要删除教师账号的用户名:" << endl;
+    cin >> usernamev;
     Manager *p = head->next, *pre = head;
     while (p) {
         if (p->getusername() == usernamev) {
             pre->next = p->next;
             delete p;
             size--;
-            return true;
+            cout << "删除成功!" << endl;
+            return;
         }
         pre = p;
         p = p->next;
     }
-    return false;
+    cout << "未找到该教师账号!" << endl;
 }
 
 void Manlist::write() {

@@ -233,6 +233,16 @@ int main() {
                         goto process3;
                         break;
                     }
+                    case 7:{//添加教师账号
+                        manlist.addTeacherByManager();
+                        goto process3;
+                        break;
+                    }
+                    case 8: {//删除教师账号
+                        manlist.delmanager();
+                        goto process3;
+                        break;
+                    }
                     case 11: {
                         goto process1;
                         break;

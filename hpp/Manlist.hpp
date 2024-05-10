@@ -23,8 +23,14 @@ public:
     // 登录
     Manager *login();
 
+    // 管理员添加教师账号
+    void addTeacherByManager();
+
+    // 检查登录
+    Manager *checkiflogin(string usernamev, string passwordv);
+
     // 检查账号是否存在
-    Manager *checkifexist(string usernamev, string passwordv);
+    Manager *checkifexist(string usernamev);
 
     // 查找账号是否存在
     Manager *findManagerByUsername(const string &username);
@@ -63,7 +69,7 @@ public:
     void managerDeleteStudentByID(Stulist &stulistv);
 
     // 删除账号
-    bool delmanager(string usernamev);
+    void delmanager();
 
     // 写入文件
     void write();
