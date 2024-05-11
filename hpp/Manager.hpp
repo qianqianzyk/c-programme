@@ -15,19 +15,21 @@ public:
               password(passwordv),
               userType(userTypev),
               status(statusv), classmanage(classmanagev) {};//构造函数
-    bool manageridentity();//管理员身份认证
 
-    string getusername() { return username; }//获取账号
+    string getUsername() { return username; }//获取账号
 
-    string getpassword() { return password; }//获取密码
+    string getPassword() { return password; }//获取密码
 
-    int getuserType() { return userType; }//获取用户类型
+    int getUserType() { return userType; }//获取用户类型
 
-    int getstatus() { return status; }//获取账号状态
+    int getStatus() { return status; }//获取账号状态
 
-    string getclassmanage() { return classmanage; }//获取权限
+    string getClassManage() { return classmanage; }//获取权限
 
-    void setstatus(int s) { status = s; }//修改账号状态
+    void setStatus(int s) { status = s; }//修改账号状态
+
+    void setPassword(string passwordv) { password = passwordv; }
+
 private:
     string username;//账号
     string password;//密码

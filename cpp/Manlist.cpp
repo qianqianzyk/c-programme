@@ -17,13 +17,20 @@ void Manlist::addManager(string &usernamev, string &passwordv, int &userTypev, i
 Manager *Manlist::login() {
     system("cls");
     string usernamev, passwordv;
+    int userTypev;
+    cout << "请输入您的身份(1:教师 2:管理员):" << endl;
+    cin >> userTypev;
     cout << "请输入账号:" << endl;
     cin >> usernamev;
     cout << "请输入密码:" << endl;
     cin >> passwordv;
 
     Manager *checkstatus = findManagerByUsername(usernamev);
-    if (checkstatus != nullptr && checkstatus->getstatus() == 2) {
+    if (userTypev == 2 && checkstatus->getUserType() != 2) {
+        cout << "很抱歉,您不是管理员!" << endl;
+        return nullptr;
+    }
+    if (checkstatus != nullptr && checkstatus->getStatus() == 2) {
         cout << "您的账号已被锁定!请联系管理员." << endl;
         return nullptr;
     }
@@ -31,7 +38,7 @@ Manager *Manlist::login() {
     Manager *target = nullptr;
 
     while (wrongtime < 5) {
-        target = checkiflogin(usernamev, passwordv);
+        target = checkIfLogin(usernamev, passwordv);
         if (target != nullptr) {
             return target;
         } else {
@@ -51,6 +58,7 @@ Manager *Manlist::login() {
             cin >> passwordv;
         }
     }
+    write();
     return nullptr;
 }
 
@@ -62,32 +70,33 @@ void Manlist::addTeacherByManager() {
     cin >> passwordv;
     cout << "请输入您要添加教师账号的权限:" << endl;
     cin >> classmanagev;
-        Manager *man = checkifexist(usernamev);
-        if (man != nullptr) {
-            cout << "您添加的教师账号已经存在!" << endl;
-            return;
-        }
-        Manager *p = new Manager(usernamev, passwordv, 1,1,classmanagev);
-        p->next = head->next;
-        head->next = p;
-        size++;
-        cout << "添加成功!" << endl;
+    Manager *man = checkIfExist(usernamev);
+    if (man != nullptr) {
+        cout << "您添加的教师账号已经存在!" << endl;
+        return;
+    }
+    Manager *p = new Manager(usernamev, passwordv, 1, 1, classmanagev);
+    p->next = head->next;
+    head->next = p;
+    size++;
+    write();
+    cout << "添加成功!" << endl;
 }
 
-Manager *Manlist::checkiflogin(string usernamev, string passwordv) {
+Manager *Manlist::checkIfLogin(string usernamev, string passwordv) {
     Manager *p = head->next;
     while (p) {
-        if (p->getusername() == usernamev && p->getpassword() == passwordv)
+        if (p->getUsername() == usernamev && p->getPassword() == passwordv)
             return p;
         p = p->next;
     }
     return nullptr;
 }
 
-Manager *Manlist::checkifexist(string usernamev) {
+Manager *Manlist::checkIfExist(string usernamev) {
     Manager *p = head->next;
     while (p) {
-        if (p->getusername() == usernamev)
+        if (p->getUsername() == usernamev)
             return p;
         p = p->next;
     }
@@ -97,7 +106,7 @@ Manager *Manlist::checkifexist(string usernamev) {
 Manager *Manlist::findManagerByUsername(const string &usernamev) {
     Manager *current = head->next;
     while (current != nullptr) {
-        if (current->getusername() == usernamev) {
+        if (current->getUsername() == usernamev) {
             return current;
         }
         current = current->next;
@@ -118,12 +127,13 @@ void Manlist::addStudentByManager(Stulist &stulistv) {
     cin >> classNamev;
     cout << "请输入您要添加学生的成绩(四门分别是高数,程C,离散,大物.请按顺序填写!):" << endl;
     for (int i = 0; i < 4; ++i) cin >> scoresv[i];
-    Student *stu = stulistv.checkifexist(idv);
+    Student *stu = stulistv.checkIfExist(idv);
     if (stu != nullptr) {
         cout << "您添加的学生已经存在!" << endl;
         return;
     }
     stulistv.addStudent(namev, genderv, idv, classNamev, scoresv);
+    stulistv.write();
     cout << "添加成功!" << endl;
 }
 
@@ -131,25 +141,25 @@ void Manlist::managerFindStudentByID(Stulist &stulistv) {
     string idv;
     cout << "请输入您要查找学生的学号:" << endl;
     cin >> idv;
-    Student *stu = stulistv.checkifexist(idv);
+    Student *stu = stulistv.checkIfExist(idv);
     if (stu == nullptr) {
         cout << "很抱歉,并未找到该学生!" << endl;
         return;
     }
     cout << "----------------------------------" << endl;
     cout << "查询成功!学生信息为:" << endl;
-    cout << "姓名:" << stu->getname() << endl;
-    cout << "性别:" << stu->getgender() << endl;
-    cout << "学号:" << stu->getid() << endl;
-    cout << "班级:" << stu->getclassName() << endl;
+    cout << "姓名:" << stu->getName() << endl;
+    cout << "性别:" << stu->getGender() << endl;
+    cout << "学号:" << stu->getId() << endl;
+    cout << "班级:" << stu->getClassName() << endl;
     cout << "成绩(高数,程C,离散,大物):";
-    const int *scores = stu->getscores();
+    const int *scores = stu->getScores();
     for (int i = 0; i < 4; ++i) {
         cout << scores[i] << ' ';
     }
     cout << endl;
-    cout << "总分:" << stu->gettotalScore() << endl;
-    cout << "平均分:" << stu->getaverageScore() << endl;
+    cout << "总分:" << stu->getTotalScore() << endl;
+    cout << "平均分:" << stu->getAverageScore() << endl;
     cout << "----------------------------------" << endl;
 }
 
@@ -161,20 +171,20 @@ void Manlist::managerFindStudentsByName(Stulist &stulistv) {
     bool found = false;
     Student *p = stulistv.getHead()->next;
     while (p) {
-        if (p->getname().find(namev) != string::npos) {
+        if (p->getName().find(namev) != string::npos) {
             found = true;
-            cout << "姓名:" << p->getname() << endl;
-            cout << "性别:" << p->getgender() << endl;
-            cout << "学号:" << p->getid() << endl;
-            cout << "班级:" << p->getclassName() << endl;
+            cout << "姓名:" << p->getName() << endl;
+            cout << "性别:" << p->getGender() << endl;
+            cout << "学号:" << p->getId() << endl;
+            cout << "班级:" << p->getClassName() << endl;
             cout << "成绩(高数,程C,离散,大物):";
-            const int *scores = p->getscores();
+            const int *scores = p->getScores();
             for (int i = 0; i < 4; ++i) {
                 cout << scores[i] << ' ';
             }
             cout << endl;
-            cout << "总分:" << p->gettotalScore() << endl;
-            cout << "平均分:" << p->getaverageScore() << endl;
+            cout << "总分:" << p->getTotalScore() << endl;
+            cout << "平均分:" << p->getAverageScore() << endl;
             cout << "----------------------------------" << endl;
         }
         p = p->next;
@@ -197,8 +207,8 @@ void Manlist::managerFindStudentsByClass(Stulist &stulistv) {
 
     Student *p = stulistv.getHead()->next;
     while (p) {
-        if (p->getclassName().find(classv) != string::npos) {
-            matchClasses.push_back(p->getclassName());
+        if (p->getClassName().find(classv) != string::npos) {
+            matchClasses.push_back(p->getClassName());
         }
         p = p->next;
     }
@@ -218,8 +228,8 @@ void Manlist::managerFindStudentsByClass(Stulist &stulistv) {
         cout << "姓名          学号" << endl;
         p = stulistv.getHead()->next;
         while (p) {
-            if (p->getclassName() == className) {
-                cout << p->getname() << "         " << p->getid() << endl;
+            if (p->getClassName() == className) {
+                cout << p->getName() << "         " << p->getId() << endl;
             }
             p = p->next;
         }
@@ -237,14 +247,14 @@ void Manlist::managerSortStudentsByID(Stulist &stulistv) {
         Student *current = students;
         students = students->next;
         // 将节点插入到已排序链表中的正确位置
-        if (!sortedList || current->getid() < sortedList->getid()) {
+        if (!sortedList || current->getId() < sortedList->getId()) {
             // 将节点插入到已排序链表的开头
             current->next = sortedList;
             sortedList = current;
         } else {
             // 在已排序链表中找到插入位置
             Student *temp = sortedList;
-            while (temp->next && temp->next->getid() < current->getid()) {
+            while (temp->next && temp->next->getId() < current->getId()) {
                 temp = temp->next;
             }
             // 将节点插入到已排序链表的中间
@@ -258,13 +268,13 @@ void Manlist::managerSortStudentsByID(Stulist &stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
-             << " " << sortedList->getclassName() << " ";
-        const int *scores = sortedList->getscores();
+        cout << number++ << " " << sortedList->getName() << " " << sortedList->getGender() << " " << sortedList->getId()
+             << " " << sortedList->getClassName() << " ";
+        const int *scores = sortedList->getScores();
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
         }
-        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        cout << sortedList->getTotalScore() << " " << sortedList->getAverageScore() << endl;
         // 移动到下一个节点并释放当前节点的内存
         Student *temp = sortedList;
         sortedList = sortedList->next;
@@ -286,14 +296,14 @@ void Manlist::managerSortStudentsBySubjectScore(Stulist &stulistv) {
         Student *current = students;
         students = students->next;
         // 将节点插入到已排序链表中的正确位置
-        if (!sortedList || current->getscores()[index - 1] > sortedList->getscores()[index - 1]) {
+        if (!sortedList || current->getScores()[index - 1] > sortedList->getScores()[index - 1]) {
             // 将节点插入到已排序链表的开头
             current->next = sortedList;
             sortedList = current;
         } else {
             // 在已排序链表中找到插入位置
             Student *temp = sortedList;
-            while (temp->next && temp->next->getscores()[index - 1] > current->getscores()[index - 1]) {
+            while (temp->next && temp->next->getScores()[index - 1] > current->getScores()[index - 1]) {
                 temp = temp->next;
             }
             // 将节点插入到已排序链表的中间
@@ -307,13 +317,13 @@ void Manlist::managerSortStudentsBySubjectScore(Stulist &stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
-             << " " << sortedList->getclassName() << " ";
-        const int *scores = sortedList->getscores();
+        cout << number++ << " " << sortedList->getName() << " " << sortedList->getGender() << " " << sortedList->getId()
+             << " " << sortedList->getClassName() << " ";
+        const int *scores = sortedList->getScores();
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
         }
-        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        cout << sortedList->getTotalScore() << " " << sortedList->getAverageScore() << endl;
         // 移动到下一个节点并释放当前节点的内存
         Student *temp = sortedList;
         sortedList = sortedList->next;
@@ -332,14 +342,14 @@ void Manlist::managerSortStudentsByTotalScore(Stulist &stulistv) {
         Student *current = students;
         students = students->next;
         // 将节点插入到已排序链表中的正确位置
-        if (!sortedList || current->gettotalScore() > sortedList->gettotalScore()) {
+        if (!sortedList || current->getTotalScore() > sortedList->getTotalScore()) {
             // 将节点插入到已排序链表的开头
             current->next = sortedList;
             sortedList = current;
         } else {
             // 在已排序链表中找到插入位置
             Student *temp = sortedList;
-            while (temp->next && temp->next->gettotalScore() > current->gettotalScore()) {
+            while (temp->next && temp->next->getTotalScore() > current->getTotalScore()) {
                 temp = temp->next;
             }
             // 将节点插入到已排序链表的中间
@@ -353,13 +363,13 @@ void Manlist::managerSortStudentsByTotalScore(Stulist &stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
-             << " " << sortedList->getclassName() << " ";
-        const int *scores = sortedList->getscores();
+        cout << number++ << " " << sortedList->getName() << " " << sortedList->getGender() << " " << sortedList->getId()
+             << " " << sortedList->getClassName() << " ";
+        const int *scores = sortedList->getScores();
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
         }
-        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        cout << sortedList->getTotalScore() << " " << sortedList->getAverageScore() << endl;
         // 移动到下一个节点并释放当前节点的内存
         Student *temp = sortedList;
         sortedList = sortedList->next;
@@ -378,14 +388,14 @@ void Manlist::managerSortStudentsByAverageScore(Stulist &stulistv) {
         Student *current = students;
         students = students->next;
         // 将节点插入到已排序链表中的正确位置
-        if (!sortedList || current->getaverageScore() > sortedList->getaverageScore()) {
+        if (!sortedList || current->getAverageScore() > sortedList->getAverageScore()) {
             // 将节点插入到已排序链表的开头
             current->next = sortedList;
             sortedList = current;
         } else {
             // 在已排序链表中找到插入位置
             Student *temp = sortedList;
-            while (temp->next && temp->next->getaverageScore() > current->getaverageScore()) {
+            while (temp->next && temp->next->getAverageScore() > current->getAverageScore()) {
                 temp = temp->next;
             }
             // 将节点插入到已排序链表的中间
@@ -399,13 +409,13 @@ void Manlist::managerSortStudentsByAverageScore(Stulist &stulistv) {
     cout << "----------------------------------------------------------------------------------" << endl;
     int number = 1;
     while (sortedList) {
-        cout << number++ << " " << sortedList->getname() << " " << sortedList->getgender() << " " << sortedList->getid()
-             << " " << sortedList->getclassName() << " ";
-        const int *scores = sortedList->getscores();;
+        cout << number++ << " " << sortedList->getName() << " " << sortedList->getGender() << " " << sortedList->getId()
+             << " " << sortedList->getClassName() << " ";
+        const int *scores = sortedList->getScores();;
         for (int i = 0; i < 4; ++i) {
             cout << scores[i] << ' ';
         }
-        cout << sortedList->gettotalScore() << " " << sortedList->getaverageScore() << endl;
+        cout << sortedList->getTotalScore() << " " << sortedList->getAverageScore() << endl;
         // 移动到下一个节点并释放当前节点的内存
         Student *temp = sortedList;
         sortedList = sortedList->next;
@@ -420,7 +430,7 @@ void Manlist::managerCountStudentsScore(Stulist &stulistv) {
 
     map<string, vector<Student *>> classStudentsMap;
     while (students) {
-        string className = students->getclassName();
+        string className = students->getClassName();
         classStudentsMap[className].push_back(students);
         students = students->next;
     }
@@ -437,7 +447,7 @@ void Manlist::managerCountStudentsScore(Stulist &stulistv) {
         int number = classStudents.size();
 
         for (Student *student: classStudents) {
-            totalAverage += student->gettotalScore();
+            totalAverage += student->getTotalScore();
         }
         totalAverage /= number;
 
@@ -461,12 +471,12 @@ void Manlist::managerCountStudentsScore(Stulist &stulistv) {
 
         Student *sortedList = nullptr;
         for (Student *current: classStudents) {
-            if (!sortedList || current->gettotalScore() > sortedList->gettotalScore()) {
+            if (!sortedList || current->getTotalScore() > sortedList->getTotalScore()) {
                 current->next = sortedList;
                 sortedList = current;
             } else {
                 Student *temp = sortedList;
-                while (temp->next && temp->next->gettotalScore() > current->gettotalScore()) {
+                while (temp->next && temp->next->getTotalScore() > current->getTotalScore()) {
                     temp = temp->next;
                 }
                 current->next = temp->next;
@@ -481,14 +491,14 @@ void Manlist::managerCountStudentsScore(Stulist &stulistv) {
         double totalSubjectScores[4] = {0};
 
         while (sortedList) {
-            const int *scores = sortedList->getscores();
+            const int *scores = sortedList->getScores();
             for (int i = 0; i < 4; ++i) {
                 totalSubjectScores[i] += scores[i];
                 if (scores[i] > 60) {
                     numAbove60[i]++;
                 }
             }
-            totalAverage += sortedList->gettotalScore();
+            totalAverage += sortedList->getTotalScore();
 
             Student *temp = sortedList;
             sortedList = sortedList->next;
@@ -516,25 +526,25 @@ void Manlist::managerUpdateStudentByID(Stulist &stulistv) {
     string idv;
     cout << "请输入您要修改学生信息的学号:" << endl;
     cin >> idv;
-    Student *stu = stulistv.checkifexist(idv);
+    Student *stu = stulistv.checkIfExist(idv);
     if (stu == nullptr) {
         cout << "很抱歉，并未找到该学生!" << endl;
         return;
     }
     cout << "----------------------------------" << endl;
     cout << "当前学生信息为:" << endl;
-    cout << "姓名:" << stu->getname() << endl;
-    cout << "性别:" << stu->getgender() << endl;
-    cout << "学号:" << stu->getid() << endl;
-    cout << "班级:" << stu->getclassName() << endl;
+    cout << "姓名:" << stu->getName() << endl;
+    cout << "性别:" << stu->getGender() << endl;
+    cout << "学号:" << stu->getId() << endl;
+    cout << "班级:" << stu->getClassName() << endl;
     cout << "成绩(高数,程C,离散,大物):";
-    const int *scores = stu->getscores();
+    const int *scores = stu->getScores();
     for (int i = 0; i < 4; ++i) {
         cout << scores[i] << ' ';
     }
     cout << endl;
-    cout << "总分:" << stu->gettotalScore() << endl;
-    cout << "平均分:" << stu->getaverageScore() << endl;
+    cout << "总分:" << stu->getTotalScore() << endl;
+    cout << "平均分:" << stu->getAverageScore() << endl;
     cout << "----------------------------------" << endl;
 
     cout << "请输入修改后的信息(注意:如果信息不变请输入原来的!):" << endl;
@@ -552,8 +562,9 @@ void Manlist::managerUpdateStudentByID(Stulist &stulistv) {
     stu->setName(namev);
     stu->setGender(genderv);
     stu->setClassName(classNamev);
-    stu->readscores(scoresv);
+    stu->readScores(scoresv);
 
+    stulistv.write();
     cout << "学生信息修改成功!" << endl;
 }
 
@@ -565,34 +576,35 @@ void Manlist::managerDeleteStudentByID(Stulist &stulistv) {
     Student *current = stulistv.getHead()->next;
     Student *pre = nullptr;
     while (current != nullptr) {
-        if (current->getid() == idv) {
+        if (current->getId() == idv) {
             if (pre == nullptr) {
                 stulistv.getHead()->next = current->next;
             } else {
                 pre->next = current->next;
             }
             delete current;
+            stulistv.write();
             cout << "成功删除学生信息!" << endl;
             return;
         }
         pre = current;
         current = current->next;
     }
-
     cout << "很抱歉，并未找到该学生!" << endl;
 }
 
 
-void Manlist::delmanager() {
+void Manlist::delManager() {
     string usernamev;
     cout << "请输入您要删除教师账号的用户名:" << endl;
     cin >> usernamev;
     Manager *p = head->next, *pre = head;
     while (p) {
-        if (p->getusername() == usernamev) {
+        if (p->getUsername() == usernamev) {
             pre->next = p->next;
             delete p;
             size--;
+            write();
             cout << "删除成功!" << endl;
             return;
         }
@@ -602,15 +614,38 @@ void Manlist::delmanager() {
     cout << "未找到该教师账号!" << endl;
 }
 
+void Manlist::resetPassword() {
+    string usernamev;
+    cout << "请输入您要重置教师账号的用户名:" << endl;
+    cin >> usernamev;
+    Manager *man = checkIfExist(usernamev);
+    if (man == nullptr) {
+        cout << "未找到该教师账号!" << endl;
+        return;
+    }
+    string passwordv1, passwordv2;
+    cout << "请输入新密码:" << endl;
+    cin >> passwordv1;
+    cout << "请再次输入密码:" << endl;
+    cin >> passwordv2;
+    if (passwordv1 != passwordv2) {
+        cout << "请输入相同的密码!" << endl;
+        return;
+    }
+    man->setPassword(passwordv1);
+    write();
+    cout << "重置成功!" << endl;
+}
+
 void Manlist::write() {
     ofstream out("../txt/Manager.txt");
     Manager *p = head->next;
     while (p) {
-        out << p->getusername() << ' ';
-        out << p->getpassword() << ' ';
-        out << p->getuserType() << ' ';
-        out << p->getstatus() << ' ';
-        out << p->getclassmanage() << ' ' << endl;
+        out << p->getUsername() << ' ';
+        out << p->getPassword() << ' ';
+        out << p->getUserType() << ' ';
+        out << p->getStatus() << ' ';
+        out << p->getClassManage() << ' ' << endl;
         p = p->next;
     }
     out.close();
@@ -619,21 +654,38 @@ void Manlist::write() {
 bool Manlist::lockAccount(const string &usernamev) {
     Manager *target = findManagerByUsername(usernamev);
     if (target != nullptr) {
-        target->setstatus(2);
+        target->setStatus(2);
         write();
         return true;
     }
     return false;
 }
 
+void Manlist::setAccount() {
+    string usernamev;
+    cout << "请输入您要修改教师账号状态的用户名:" << endl;
+    cin >> usernamev;
+    Manager *man = checkIfExist(usernamev);
+    if (man == nullptr) {
+        cout << "未找到该教师账号!" << endl;
+        return;
+    }
+    int statusv;
+    cout << "请输入您要修改的状态(1:活跃 2:锁定):";
+    cin >> statusv;
+    man->setStatus(statusv);
+    write();
+    cout << "修改成功!" << endl;
+}
+
 void Manlist::showAllManagers() {
     Manager *current = head->next;
     while (current != nullptr) {
-        cout << "Username: " << current->getusername() << endl;
-        cout << "Password: " << current->getpassword() << endl;
-        cout << "User Type: " << current->getuserType() << endl;
-        cout << "Status: " << current->getstatus() << endl;
-        cout << "ClassManage" << current->getclassmanage() << endl;
+        cout << "Username: " << current->getUsername() << endl;
+        cout << "Password: " << current->getPassword() << endl;
+        cout << "User Type: " << current->getUserType() << endl;
+        cout << "Status: " << current->getStatus() << endl;
+        cout << "ClassManage" << current->getClassManage() << endl;
         cout << "------------------------" << endl;
 
         current = current->next;

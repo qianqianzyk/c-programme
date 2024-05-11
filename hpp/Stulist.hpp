@@ -17,15 +17,15 @@ public:
         size = 0;
     }
 
-    Stulist(const Stulist& other) {
+    Stulist(const Stulist &other) {
         head = new Student;
         head->next = nullptr;
         size = 0;
 
-        Student* p = other.head->next;
-        Student* tail = head;
+        Student *p = other.head->next;
+        Student *tail = head;
         while (p) {
-            Student* newNode = new Student(*p);
+            Student *newNode = new Student(*p);
 
             tail->next = newNode;
             tail = newNode;
@@ -44,7 +44,7 @@ public:
     void addStudentByTeacher(string classmanagev);
 
     // 查看学生是否已经存在
-    Student *checkifexist(string idv);
+    Student *checkIfExist(string idv);
 
     // 写入文件
     void write();

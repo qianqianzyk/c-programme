@@ -44,26 +44,26 @@ int main() {
                 cin >> choice_2;
                 switch (choice_2) {
                     case 1: {//添加学生信息
-                        stulist.addStudentByTeacher(target->getclassmanage());
+                        stulist.addStudentByTeacher(target->getClassManage());
                         goto process2;
                         break;
                     }
                     case 2: {//查询学生信息
-                        Menu::howfind();
+                        Menu::howFind();
                         cin >> choice_3;
                         switch (choice_3) {
                             case 1: {//根据学号
-                                stulist.findStudentByID(target->getclassmanage());
+                                stulist.findStudentByID(target->getClassManage());
                                 goto process2;
                                 break;
                             }
                             case 2: {//根据姓名
-                                stulist.findStudentsByName(target->getclassmanage());
+                                stulist.findStudentsByName(target->getClassManage());
                                 goto process2;
                                 break;
                             }
                             case 3: {//根据班级
-                                stulist.findStudentsByClass(target->getclassmanage());
+                                stulist.findStudentsByClass(target->getClassManage());
                                 goto process2;
                                 break;
                             }
@@ -80,26 +80,26 @@ int main() {
                         }
                     }
                     case 3: {//排序
-                        Menu::howsort();
+                        Menu::howSort();
                         cin >> choice_4;
                         switch (choice_4) {
                             case 1: {//根据学号
-                                stulist.sortStudentsByID(target->getclassmanage());
+                                stulist.sortStudentsByID(target->getClassManage());
                                 goto process2;
                                 break;
                             }
                             case 2: {//根据单科成绩
-                                stulist.sortStudentsBySubjectScore(target->getclassmanage());
+                                stulist.sortStudentsBySubjectScore(target->getClassManage());
                                 goto process2;
                                 break;
                             }
                             case 3: {//根据平均分
-                                stulist.sortStudentsByAverageScore(target->getclassmanage());
+                                stulist.sortStudentsByAverageScore(target->getClassManage());
                                 goto process2;
                                 break;
                             }
                             case 4: {//根据总分
-                                stulist.sortStudentsByTotalScore(target->getclassmanage());
+                                stulist.sortStudentsByTotalScore(target->getClassManage());
                                 goto process2;
                                 break;
                             }
@@ -115,17 +115,17 @@ int main() {
                         }
                     }
                     case 4: {//统计学生成绩
-                        stulist.countStudentsScore(target->getclassmanage());
+                        stulist.countStudentsScore(target->getClassManage());
                         goto process2;
                         break;
                     }
                     case 5: {//修改学生信息
-                        stulist.updateStudentByID(target->getclassmanage());
+                        stulist.updateStudentByID(target->getClassManage());
                         goto process2;
                         break;
                     }
                     case 6: {//删除学生信息
-                        stulist.deleteStudentByID(target->getclassmanage());
+                        stulist.deleteStudentByID(target->getClassManage());
                         goto process2;
                         break;
                     }
@@ -154,7 +154,7 @@ int main() {
                         break;
                     }
                     case 2: {//查询学生信息
-                        Menu::howfind();
+                        Menu::howFind();
                         cin >> choice_5;
                         switch (choice_5) {
                             case 1: {//根据学号
@@ -184,7 +184,7 @@ int main() {
                         }
                     }
                     case 3: {//排序
-                        Menu::howsort();
+                        Menu::howSort();
                         cin >> choice_6;
                         switch (choice_6) {
                             case 1: {//根据学号
@@ -233,13 +233,23 @@ int main() {
                         goto process3;
                         break;
                     }
-                    case 7:{//添加教师账号
+                    case 7: {//添加教师账号
                         manlist.addTeacherByManager();
                         goto process3;
                         break;
                     }
                     case 8: {//删除教师账号
-                        manlist.delmanager();
+                        manlist.delManager();
+                        goto process3;
+                        break;
+                    }
+                    case 9: {//重置账号密码
+                        manlist.resetPassword();
+                        goto process3;
+                        break;
+                    }
+                    case 10: {//接触账号锁定
+                        manlist.setAccount();
                         goto process3;
                         break;
                     }
@@ -257,8 +267,6 @@ int main() {
             }
             case 3: {
                 Menu::bye();
-                stulist.write();
-                manlist.write();
                 return 0;
                 break;
             }

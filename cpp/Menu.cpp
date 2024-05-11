@@ -39,7 +39,7 @@ void Menu::managerMenu() {
     cout << "|7.  添加教师账号        |" << endl;
     cout << "|8.  删除教师账号        |" << endl;
     cout << "|9.  重置账号密码        |" << endl;
-    cout << "|10. 解除账号锁定        |" << endl;
+    cout << "|10. 修改账号状态        |" << endl;
     cout << "|11. 返回上级菜单        |" << endl;
     cout << "=======================" << endl;
     cout << "请输入:";
@@ -52,7 +52,7 @@ void Menu::bye() {
     cout << "========================" << endl;
 }
 
-void Menu::howfind() {
+void Menu::howFind() {
     clearScreen();
     cout << "=======================" << endl;
     cout << "|1. 根据学生学号         |" << endl;
@@ -63,7 +63,7 @@ void Menu::howfind() {
     cout << "请输入:";
 }
 
-void Menu::howsort() {
+void Menu::howSort() {
     clearScreen();
     cout << "======================" << endl;
     cout << "|1. 根据学生学号         |" << endl;

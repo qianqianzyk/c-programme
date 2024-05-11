@@ -27,10 +27,10 @@ public:
     void addTeacherByManager();
 
     // 检查登录
-    Manager *checkiflogin(string usernamev, string passwordv);
+    Manager *checkIfLogin(string usernamev, string passwordv);
 
     // 检查账号是否存在
-    Manager *checkifexist(string usernamev);
+    Manager *checkIfExist(string usernamev);
 
     // 查找账号是否存在
     Manager *findManagerByUsername(const string &username);
@@ -69,13 +69,19 @@ public:
     void managerDeleteStudentByID(Stulist &stulistv);
 
     // 删除账号
-    void delmanager();
+    void delManager();
+
+    // 重置账号密码
+    void resetPassword();
 
     // 写入文件
     void write();
 
     // 锁定账号
     bool lockAccount(const string &username);
+
+    // 修改账号状态
+    void setAccount();
 
     // 获取所有账号
     void showAllManagers();

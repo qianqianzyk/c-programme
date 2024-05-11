@@ -26,19 +26,19 @@ public:
         }
     }
 
-    string getname() const { return name; }
+    string getName() const { return name; }
 
-    string getgender() const { return gender; }
+    string getGender() const { return gender; }
 
-    string getid() const { return id; }
+    string getId() const { return id; }
 
-    string getclassName() const { return className; }
+    string getClassName() const { return className; }
 
-    const int *getscores() const { return scores; }
+    const int *getScores() const { return scores; }
 
-    int gettotalScore() const { return totalScore; }
+    int getTotalScore() const { return totalScore; }
 
-    double getaverageScore() const { return averageScore; }
+    double getAverageScore() const { return averageScore; }
 
     void setName(const string &namev) { name = namev; }
 
@@ -57,7 +57,7 @@ public:
     void calculateAverageScore();
 
     // 初始化学生成绩
-    void readscores(int (&scores)[4]);
+    void readScores(int (&scores)[4]);
 };
 
 

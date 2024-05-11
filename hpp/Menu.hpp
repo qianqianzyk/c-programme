@@ -15,13 +15,13 @@ public:
 
     static void bye();
 
-    static void howfind();
+    static void howFind();
 
-    static void howcount();
+    static void howCount();
 
-    static void howsort();
+    static void howSort();
 
-    static void countscore();
+    static void countScore();
 
 private:
     static void clearScreen() {

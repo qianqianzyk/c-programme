@@ -13,7 +13,7 @@ void Student::calculateAverageScore() {
     averageScore = totalScore / 4.0;
 }
 
-void Student::readscores(int (&scoresv)[4]) {
+void Student::readScores(int (&scoresv)[4]) {
     for (int i = 0; i < 4; ++i) {
         this->scores[i] = scoresv[i];
     }
