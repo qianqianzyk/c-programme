@@ -40,6 +40,16 @@ void Stulist::addStudentByTeacher(string classmanagev) {
         size++;
         write();
         cout << "添加成功!" << endl;
+        cout << "姓名:" << namev << endl;
+        cout << "性别:" << genderv << endl;
+        cout << "学号:" << idv << endl;
+        cout << "班级:" << classNamev << endl;
+        cout << "成绩(高数,程C,离散,大物):";
+        for (int i = 0; i < 4; ++i) {
+            cout << scoresv[i] << ' ';
+        }
+        cout << endl;
+        cout << "----------------------------------" << endl;
     } else {
         cout << "很抱歉,您无权操作!请联系管理员." << endl;
     }
