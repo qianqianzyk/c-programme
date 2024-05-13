@@ -484,6 +484,16 @@ void Stulist::updateStudentByID(string classmanagev) {
 
             write();
             cout << "学生信息修改成功!" << endl;
+            cout << "姓名:" << stu->getName() << endl;
+            cout << "性别:" << stu->getGender() << endl;
+            cout << "学号:" << stu->getId() << endl;
+            cout << "班级:" << stu->getClassName() << endl;
+            cout << "成绩(高数,程C,离散,大物):";
+            for (int i = 0; i < 4; ++i) {
+                cout << scores[i] << ' ';
+            }
+            cout << endl;
+            cout << "----------------------------------" << endl;
         } else {
             cout << "很抱歉,您无权操作!请联系管理员." << endl;
         }

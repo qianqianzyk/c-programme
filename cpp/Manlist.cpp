@@ -135,6 +135,16 @@ void Manlist::addStudentByManager(Stulist &stulistv) {
     stulistv.addStudent(namev, genderv, idv, classNamev, scoresv);
     stulistv.write();
     cout << "添加成功!" << endl;
+    cout << "姓名:" << namev << endl;
+    cout << "性别:" << genderv << endl;
+    cout << "学号:" << idv << endl;
+    cout << "班级:" << classNamev << endl;
+    cout << "成绩(高数,程C,离散,大物):";
+    for (int i = 0; i < 4; ++i) {
+        cout << scoresv[i] << ' ';
+    }
+    cout << endl;
+    cout << "----------------------------------" << endl;
 }
 
 void Manlist::managerFindStudentByID(Stulist &stulistv) {
@@ -566,6 +576,16 @@ void Manlist::managerUpdateStudentByID(Stulist &stulistv) {
 
     stulistv.write();
     cout << "学生信息修改成功!" << endl;
+    cout << "姓名:" << stu->getName() << endl;
+    cout << "性别:" << stu->getGender() << endl;
+    cout << "学号:" << stu->getId() << endl;
+    cout << "班级:" << stu->getClassName() << endl;
+    cout << "成绩(高数,程C,离散,大物):";
+    for (int i = 0; i < 4; ++i) {
+        cout << scores[i] << ' ';
+    }
+    cout << endl;
+    cout << "----------------------------------" << endl;
 }
 
 void Manlist::managerDeleteStudentByID(Stulist &stulistv) {
