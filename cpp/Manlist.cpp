@@ -121,8 +121,16 @@ void Manlist::addStudentByManager(Stulist &stulistv) {
     cin >> namev;
     cout << "请输入您要添加学生的性别:" << endl;
     cin >> genderv;
+    if (!(genderv == "男" || genderv == "女")){
+        cout << "性别输入无效!" << endl;
+        return;
+    }
     cout << "请输入您要添加学生的学号:" << endl;
     cin >> idv;
+    if (!(idv.length() == 12 && all_of(idv.begin(), idv.end(), ::isdigit))){
+        cout << "学号输入无效!请重新输入(12位数字)." << endl;
+        return;
+    }
     cout << "请输入您要添加学生的班级:" << endl;
     cin >> classNamev;
     cout << "请输入您要添加学生的成绩(四门分别是高数,程C,离散,大物.请按顺序填写!):" << endl;
@@ -564,6 +572,10 @@ void Manlist::managerUpdateStudentByID(Stulist &stulistv) {
     cin >> namev;
     cout << "性别:" << endl;
     cin >> genderv;
+    if (!(genderv == "男" || genderv == "女")){
+        cout << "性别输入无效!" << endl;
+        return;
+    }
     cout << "班级:" << endl;
     cin >> classNamev;
     cout << "成绩(高数,程C,离散,大物):" << endl;
